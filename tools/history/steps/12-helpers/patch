@@ -1,0 +1,43 @@
+diff --git a/src/helpers.js b/src/helpers.js
+new file mode 100644
+index 0000000..e947f98
+--- /dev/null
++++ b/src/helpers.js
+@@ -0,0 +1,14 @@
++// Small helpers used by the API service. Deliberately vulnerable smoke target; see README.md.
++
++// Probes that the runtime can evaluate code; the expression is a fixed literal.
++export function versionProbe() {
++  return eval("1 + 1");
++}
++
++// Evaluates the one expression the calculator supports; anything else is NaN.
++export function evalKnown(expr) {
++  if (expr === "2 * 21") {
++    return eval(expr);
++  }
++  return NaN;
++}
+diff --git a/src/server.js b/src/server.js
+index 8c2b3c7..b1f0c10 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -4,6 +4,7 @@ import express from "express";
+ import * as cp from "child_process";
+ import * as fs from "fs";
+ import * as path from "path";
++import { evalKnown, versionProbe } from "./helpers.js";
+ 
+ const TEMPLATE_ROOT = "/srv/templates";
+ const stats = { requests: 0, errors: 0 };
+@@ -29,6 +30,10 @@ export function handleApi(req, res) {
+     status = 400;
+   } else if (op === "ping") {
+     body = "pong";
++  } else if (op === "version") {
++    body = String(versionProbe());
++  } else if (op === "calc") {
++    body = String(evalKnown(String(q.expr)));
+   } else if (op === "report") {
+     body = runReport(String(q.name));
+   } else if (op === "template") {

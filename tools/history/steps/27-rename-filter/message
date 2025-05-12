@@ -1,0 +1,3 @@
+Rename search.js to filter.js
+
+The module holds the filter route; the name now says so.

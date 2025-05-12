@@ -1,0 +1,14 @@
+diff --git a/tsconfig.json b/tsconfig.json
+index ccce498..5a0cf99 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -11,7 +11,8 @@
+     "checkJs": false,
+     "rootDir": "src",
+     "outDir": "dist",
+-    "skipLibCheck": true
++    "skipLibCheck": true,
++    "strict": true
+   },
+   "include": [
+     "src"

@@ -1,0 +1,8 @@
+Fix command injection in runReport (CWE-78)
+
+The report op passed the report name from the request into a shell command
+string and ran it with child_process.execSync, so a name containing shell
+metacharacters ran arbitrary commands as the service user. runReport now
+matches the name against the two reports it supports and produces them
+in-process: there is no command string and no shell, so no request input
+reaches a command interpreter.

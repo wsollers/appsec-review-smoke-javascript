@@ -1,0 +1,127 @@
+diff --git a/src/app.js b/src/app.js
+new file mode 100644
+index 0000000..4e99c95
+--- /dev/null
++++ b/src/app.js
+@@ -0,0 +1,57 @@
++import express from "express";
++import { Pool } from "pg";
++import * as cp from "child_process";
++import * as fs from "fs";
++import * as path from "path";
++import * as http from "http";
++import serialize from "node-serialize";
++
++const ROOT = "/srv/files";
++
++function buildQuery(id) {
++  return "SELECT * FROM users WHERE id = " + id;
++}
++
++function handleSql(req, res) {
++  const pool = new Pool();
++  pool.query(buildQuery(req.query.id));
++}
++
++function handleExec(req, res) {
++  const host = req.query.host;
++  if (host === "localhost") {
++    cp.exec(host);
++  }
++  cp.exec("nslookup " + host);
++}
++
++function handleFile(req, res) {
++  const name = path.basename(req.query.file);
++  fs.readFileSync(path.join(ROOT, name));
++}
++
++function handleFetch(req, res) {
++  const target = req.query.url;
++  http.get(target);
++}
++
++function handleRestore(req, res) {
++  const blob = req.body;
++  serialize.unserialize(blob);
++}
++
++function handleEcho(req, res) {
++  const who = req.query.name;
++  res.send("Hello " + who);
++}
++
++export function main() {
++  const app = express();
++  app.get("/sql", handleSql);
++  app.get("/exec", handleExec);
++  app.get("/file", handleFile);
++  app.get("/fetch", handleFetch);
++  app.post("/restore", handleRestore);
++  app.get("/echo", handleEcho);
++  app.listen(8080);
++}
+diff --git a/src/cli.js b/src/cli.js
+new file mode 100644
+index 0000000..78187c4
+--- /dev/null
++++ b/src/cli.js
+@@ -0,0 +1,24 @@
++import * as cp from "child_process";
++import readlineSync from "readline-sync";
++
++function runCommand(cmd) {
++  cp.execSync(cmd);
++}
++
++export function runFromArgs() {
++  runCommand(process.argv[2]);
++}
++
++export function runFromEnv() {
++  runCommand(process.env.TOOL_CMD);
++}
++
++export function askAndRun() {
++  const answer = readlineSync.question("command? ");
++  console.log(answer);
++  runCommand(answer);
++}
++
++export function token() {
++  return Math.random();
++}
+diff --git a/src/store.ts b/src/store.ts
+new file mode 100644
+index 0000000..e1e0ef7
+--- /dev/null
++++ b/src/store.ts
+@@ -0,0 +1,28 @@
++import * as fs from "fs";
++
++interface Store {
++  save(key: string): void;
++}
++
++class MemoryStore implements Store {
++  last = "";
++
++  save(key: string): void {
++    this.last = key;
++  }
++}
++
++class FileStore implements Store {
++  save(key: string): void {
++    fs.writeFileSync(key, "");
++  }
++}
++
++export function persist(durable: boolean, key: string): void {
++  const s: Store = durable ? new FileStore() : new MemoryStore();
++  s.save(key);
++}
++
++export function invoke(obj: any, name: string): void {
++  obj[name]();
++}

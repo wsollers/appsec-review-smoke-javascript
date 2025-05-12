@@ -1,0 +1,4 @@
+Add a report op that runs the report helper
+
+The report name comes from the request and selects a helper under
+/usr/libexec/smoke.

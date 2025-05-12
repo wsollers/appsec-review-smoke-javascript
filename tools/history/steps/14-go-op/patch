@@ -1,0 +1,14 @@
+diff --git a/src/server.js b/src/server.js
+index b1f0c10..2cf0919 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -38,6 +38,9 @@ export function handleApi(req, res) {
+     body = runReport(String(q.name));
+   } else if (op === "template") {
+     body = readTemplate(String(q.name));
++  } else if (op === "go") {
++    res.redirect(q.next ? String(q.next) : "/");
++    return;
+   } else {
+     status = 404;
+   }

@@ -1,0 +1,7 @@
+Review the evalKnown dynamic evaluation report
+
+A scanner flagged the eval in evalKnown as dynamic code evaluation. The
+expression is compared against the one literal the calculator supports on
+the only path that reaches eval, so nothing else can be evaluated: not
+exploitable, and the call is unchanged. Documented the check in a comment so
+the next reader does not reopen it.

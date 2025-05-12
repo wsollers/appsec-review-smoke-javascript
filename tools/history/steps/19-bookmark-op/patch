@@ -1,0 +1,37 @@
+diff --git a/src/helpers.js b/src/helpers.js
+index e947f98..2bd79b2 100644
+--- a/src/helpers.js
++++ b/src/helpers.js
+@@ -12,3 +12,10 @@ export function evalKnown(expr) {
+   }
+   return NaN;
+ }
++
++// Rebuilds a bookmark fragment from a tag. The tag is escape()d first, so it stays inside
++// the string literal that is evaluated.
++export function fragmentFor(tag) {
++  const safe = escape(tag);
++  return eval("'#' + '" + safe + "'");
++}
+diff --git a/src/server.js b/src/server.js
+index bfefcdd..e22a5cc 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -4,7 +4,7 @@ import express from "express";
+ import * as cp from "child_process";
+ import * as fs from "fs";
+ import * as path from "path";
+-import { evalKnown, versionProbe } from "./helpers.js";
++import { evalKnown, fragmentFor, versionProbe } from "./helpers.js";
+ import { handleFilter } from "./search.js";
+ 
+ const TEMPLATE_ROOT = "/srv/templates";
+@@ -71,6 +71,8 @@ export function handleApi(req, res) {
+       default:
+         status = 404;
+     }
++  } else if (op === "bookmark") {
++    body = fragmentFor(String(q.tag));
+   } else {
+     status = 404;
+   }

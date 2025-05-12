@@ -1,0 +1,3 @@
+Reapply "Add an X-Request-Id header to API replies"
+
+The client now reads the header.

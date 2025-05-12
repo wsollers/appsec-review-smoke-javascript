@@ -1,0 +1,3 @@
+Revert "Add an X-Request-Id header to API replies"
+
+The header breaks the line-oriented client; revert until it can parse it.

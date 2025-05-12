@@ -1,0 +1,29 @@
+diff --git a/SECURITY.md b/SECURITY.md
+new file mode 100644
+index 0000000..1b5153f
+--- /dev/null
++++ b/SECURITY.md
+@@ -0,0 +1,23 @@
++# Security notes
++
++This repository is a deliberately vulnerable smoke target. It is never deployed, so there is no
++disclosure process. The entries below record the issues that were fixed in this history, so that
++the record of what changed and why is in one place.
++
++## 2026-03-08: path traversal in `readTemplate` (CWE-22)
++
++The `template` op joined the client-supplied name onto the template root and read the result, so a
++name containing `../` read files outside the template directory. `readTemplate` now reduces the
++name to its base name with `path.basename()` before joining it, so the path cannot leave the root.
++
++## 2026-02-26: command injection in `runReport` (CWE-78)
++
++The `report` op built a shell command from the client-supplied report name and ran it with
++`child_process.execSync()`, so shell metacharacters in the name ran arbitrary commands. `runReport`
++now produces the two supported reports in-process; there is no command string.
++
++## 2026-02-11: node-fetch 2.6.0 (GHSA-r683-j2x4-v87g / CVE-2022-0235)
++
++node-fetch before 2.6.7 forwarded `Authorization` and `Cookie` headers when following a redirect
++to another origin, and before 2.6.1 did not honour the `size` option after a redirect
++(CVE-2020-15168). The pin was raised to 2.6.7, which fixes both.

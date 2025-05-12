@@ -1,0 +1,4 @@
+Vendor typescript 5.6.3
+
+The compiler bundle and its ES library declarations from the npm tarball, under
+node_modules/typescript.

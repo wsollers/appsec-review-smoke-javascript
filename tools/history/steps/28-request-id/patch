@@ -1,0 +1,12 @@
+diff --git a/src/server.js b/src/server.js
+index 1141a5f..256773f 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -90,6 +90,7 @@ export function handleApi(req, res) {
+   } else {
+     stats.errors++;
+   }
++  res.set("X-Request-Id", String(stats.requests + stats.errors));
+   res.status(status).send(body);
+ }
+ 

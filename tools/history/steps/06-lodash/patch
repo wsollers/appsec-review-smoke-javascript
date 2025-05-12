@@ -1,0 +1,38 @@
+diff --git a/package-lock.json b/package-lock.json
+index 8a6b068..9ff2065 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -8,10 +8,19 @@
+       "name": "appsec-review-smoke-javascript",
+       "version": "1.0.0",
+       "license": "MIT",
++      "dependencies": {
++        "lodash": "4.17.15"
++      },
+       "devDependencies": {
+         "typescript": "5.6.3"
+       }
+     },
++    "node_modules/lodash": {
++      "version": "4.17.15",
++      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz",
++      "integrity": "sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
++      "license": "MIT"
++    },
+     "node_modules/typescript": {
+       "version": "5.6.3",
+       "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz",
+diff --git a/package.json b/package.json
+index 0eff37d..fbdc119 100644
+--- a/package.json
++++ b/package.json
+@@ -8,6 +8,9 @@
+   "scripts": {
+     "build": "node node_modules/typescript/bin/tsc -p tsconfig.json"
+   },
++  "dependencies": {
++    "lodash": "4.17.15"
++  },
+   "devDependencies": {
+     "typescript": "5.6.3"
+   }

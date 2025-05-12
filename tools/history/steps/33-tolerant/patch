@@ -1,0 +1,12 @@
+diff --git a/src/server.js b/src/server.js
+index 256773f..e450aa1 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -97,6 +97,7 @@ export function handleApi(req, res) {
+ // Starts the API service on the given port.
+ export function serve(port) {
+   const app = express();
++  app.disable("x-powered-by");
+   app.get("/api/:op", handleApi);
+   app.get("/audit", handleAudit);
+   app.get("/filter", handleFilter);

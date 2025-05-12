@@ -1,0 +1,81 @@
+diff --git a/package-lock.json b/package-lock.json
+new file mode 100644
+index 0000000..8a6b068
+--- /dev/null
++++ b/package-lock.json
+@@ -0,0 +1,30 @@
++{
++  "name": "appsec-review-smoke-javascript",
++  "version": "1.0.0",
++  "lockfileVersion": 3,
++  "requires": true,
++  "packages": {
++    "": {
++      "name": "appsec-review-smoke-javascript",
++      "version": "1.0.0",
++      "license": "MIT",
++      "devDependencies": {
++        "typescript": "5.6.3"
++      }
++    },
++    "node_modules/typescript": {
++      "version": "5.6.3",
++      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz",
++      "integrity": "sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==",
++      "dev": true,
++      "license": "Apache-2.0",
++      "bin": {
++        "tsc": "bin/tsc",
++        "tsserver": "bin/tsserver"
++      },
++      "engines": {
++        "node": ">=14.17"
++      }
++    }
++  }
++}
+diff --git a/package.json b/package.json
+new file mode 100644
+index 0000000..0eff37d
+--- /dev/null
++++ b/package.json
+@@ -0,0 +1,14 @@
++{
++  "name": "appsec-review-smoke-javascript",
++  "version": "1.0.0",
++  "private": true,
++  "description": "Deliberately vulnerable smoke target for appsec-review. Do not deploy.",
++  "license": "MIT",
++  "type": "module",
++  "scripts": {
++    "build": "node node_modules/typescript/bin/tsc -p tsconfig.json"
++  },
++  "devDependencies": {
++    "typescript": "5.6.3"
++  }
++}
+diff --git a/tsconfig.json b/tsconfig.json
+new file mode 100644
+index 0000000..ccce498
+--- /dev/null
++++ b/tsconfig.json
+@@ -0,0 +1,19 @@
++{
++  "compilerOptions": {
++    "target": "es2020",
++    "module": "es2020",
++    "moduleResolution": "node",
++    "lib": [
++      "es2020"
++    ],
++    "types": [],
++    "allowJs": true,
++    "checkJs": false,
++    "rootDir": "src",
++    "outDir": "dist",
++    "skipLibCheck": true
++  },
++  "include": [
++    "src"
++  ]
++}

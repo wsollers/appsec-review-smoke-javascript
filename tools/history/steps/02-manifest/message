@@ -1,0 +1,4 @@
+Add the npm manifest and the TypeScript build
+
+tsc compiles src/ with allowJs; the compiler itself is vendored so the build
+needs no install step and no network.

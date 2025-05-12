@@ -1,0 +1,4 @@
+Hardening review: record the fixed issues in SECURITY.md
+
+No code changes. The three security fixes in this history (the node-fetch upgrade,
+runReport and readTemplate) are now described in one place with their dates.

@@ -1,0 +1,17 @@
+diff --git a/src/search.js b/src/filter.js
+similarity index 100%
+rename from src/search.js
+rename to src/filter.js
+diff --git a/src/server.js b/src/server.js
+index 7f4f36b..1141a5f 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -4,7 +4,7 @@ import express from "express";
+ import * as fs from "fs";
+ import * as path from "path";
+ import { evalKnown, fragmentFor, versionProbe } from "./helpers.js";
+-import { handleFilter } from "./search.js";
++import { handleFilter } from "./filter.js";
+ 
+ const TEMPLATE_ROOT = "/srv/templates";
+ const stats = { requests: 0, errors: 0 };

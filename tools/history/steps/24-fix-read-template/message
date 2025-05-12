@@ -1,0 +1,7 @@
+Fix path traversal in readTemplate (CWE-22)
+
+The template op joined the requested name onto the template root and read the
+result, so "../" sequences read files outside the template directory.
+readTemplate now reduces the name to its base name with path.basename before
+joining it; the base name has no separators, so the joined path cannot leave
+the root on any path to readFileSync.

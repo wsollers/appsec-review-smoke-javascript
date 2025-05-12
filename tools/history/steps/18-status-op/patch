@@ -1,0 +1,25 @@
+diff --git a/src/server.js b/src/server.js
+index 0ad2cf8..bfefcdd 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -57,6 +57,20 @@ export function handleApi(req, res) {
+       }
+     }
+     body = String(total);
++  } else if (op === "status") {
++    switch (q.kind) {
++      case "requests":
++        body = String(stats.requests);
++        break;
++      case "errors":
++        body = String(stats.errors);
++        break;
++      case "uptime":
++        body = String(Math.floor(process.uptime()));
++        break;
++      default:
++        status = 404;
++    }
+   } else {
+     status = 404;
+   }

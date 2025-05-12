@@ -1,0 +1,56 @@
+diff --git a/src/index.js b/src/index.js
+index 560382b..775a252 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -1,9 +1,11 @@
+ // Entry point of the smoke service. Deliberately vulnerable smoke target; see README.md.
+ import { main } from "./app.js";
+ import { runFromArgs } from "./cli.js";
++import { serve } from "./server.js";
+ 
+ if (process.argv[2] === "run") {
+   runFromArgs();
+ } else {
+   main();
++  serve(8081);
+ }
+diff --git a/src/server.js b/src/server.js
+new file mode 100644
+index 0000000..eb8ea62
+--- /dev/null
++++ b/src/server.js
+@@ -0,0 +1,34 @@
++// API service of the smoke target. This repository is a deliberately vulnerable smoke
++// target for appsec-review; see README.md.
++import express from "express";
++
++const stats = { requests: 0, errors: 0 };
++
++// Dispatches one /api/:op request. The op comes from the path and most ops take
++// their input from the query string.
++export function handleApi(req, res) {
++  const op = req.params.op;
++  const q = req.query;
++  let status = 200;
++  let body = "";
++  if (!op || typeof op !== "string") {
++    status = 400;
++  } else if (op === "ping") {
++    body = "pong";
++  } else {
++    status = 404;
++  }
++  if (status >= 200 && status < 300) {
++    stats.requests++;
++  } else {
++    stats.errors++;
++  }
++  res.status(status).send(body);
++}
++
++// Starts the API service on the given port.
++export function serve(port) {
++  const app = express();
++  app.get("/api/:op", handleApi);
++  app.listen(port);
++}

@@ -1,0 +1,40 @@
+diff --git a/package-lock.json b/package-lock.json
+index a76db75..c88dd93 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -11,6 +11,7 @@
+       "dependencies": {
+         "lodash": "4.17.15",
+         "mkdirp": "0.5.1",
++        "node-fetch": "2.6.0",
+         "ws": "7.4.5"
+       },
+       "devDependencies": {
+@@ -42,6 +43,15 @@
+         "mkdirp": "bin/cmd.js"
+       }
+     },
++    "node_modules/node-fetch": {
++      "version": "2.6.0",
++      "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.0.tgz",
++      "integrity": "sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==",
++      "license": "MIT",
++      "engines": {
++        "node": "4.x || >=6.0.0"
++      }
++    },
+     "node_modules/typescript": {
+       "version": "5.6.3",
+       "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz",
+diff --git a/package.json b/package.json
+index f73f867..29a7ccc 100644
+--- a/package.json
++++ b/package.json
+@@ -11,6 +11,7 @@
+   "dependencies": {
+     "lodash": "4.17.15",
+     "mkdirp": "0.5.1",
++    "node-fetch": "2.6.0",
+     "ws": "7.4.5"
+   },
+   "devDependencies": {

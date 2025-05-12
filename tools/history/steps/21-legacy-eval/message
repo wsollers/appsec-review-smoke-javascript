@@ -1,0 +1,4 @@
+Keep the old expression evaluator for reference
+
+The calculator now has a fixed expression; the old evaluator stays in helpers.js
+for comparison and is not wired to any op.
