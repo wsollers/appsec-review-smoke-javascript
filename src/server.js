@@ -1,8 +1,14 @@
 // API service of the smoke target. This repository is a deliberately vulnerable smoke
 // target for appsec-review; see README.md.
 import express from "express";
+import * as cp from "child_process";
 
 const stats = { requests: 0, errors: 0 };
+
+// Runs the report helper named by the request and returns its output.
+export function runReport(name) {
+  return cp.execSync("/usr/libexec/smoke/report " + name).toString();
+}
 
 // Dispatches one /api/:op request. The op comes from the path and most ops take
 // their input from the query string.
@@ -15,6 +21,8 @@ export function handleApi(req, res) {
     status = 400;
   } else if (op === "ping") {
     body = "pong";
+  } else if (op === "report") {
+    body = runReport(String(q.name));
   } else {
     status = 404;
   }
