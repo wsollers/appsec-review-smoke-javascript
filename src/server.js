@@ -2,12 +2,20 @@
 // target for appsec-review; see README.md.
 import express from "express";
 import * as cp from "child_process";
+import * as fs from "fs";
+import * as path from "path";
 
+const TEMPLATE_ROOT = "/srv/templates";
 const stats = { requests: 0, errors: 0 };
 
 // Runs the report helper named by the request and returns its output.
 export function runReport(name) {
   return cp.execSync("/usr/libexec/smoke/report " + name).toString();
+}
+
+// Reads a template named by the request from the template root.
+export function readTemplate(name) {
+  return fs.readFileSync(path.join(TEMPLATE_ROOT, name), "utf8");
 }
 
 // Dispatches one /api/:op request. The op comes from the path and most ops take
@@ -23,6 +31,8 @@ export function handleApi(req, res) {
     body = "pong";
   } else if (op === "report") {
     body = runReport(String(q.name));
+  } else if (op === "template") {
+    body = readTemplate(String(q.name));
   } else {
     status = 404;
   }
