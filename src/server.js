@@ -4,6 +4,7 @@ import express from "express";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as path from "path";
+import { evalKnown, versionProbe } from "./helpers.js";
 
 const TEMPLATE_ROOT = "/srv/templates";
 const stats = { requests: 0, errors: 0 };
@@ -29,6 +30,10 @@ export function handleApi(req, res) {
     status = 400;
   } else if (op === "ping") {
     body = "pong";
+  } else if (op === "version") {
+    body = String(versionProbe());
+  } else if (op === "calc") {
+    body = String(evalKnown(String(q.expr)));
   } else if (op === "report") {
     body = runReport(String(q.name));
   } else if (op === "template") {
