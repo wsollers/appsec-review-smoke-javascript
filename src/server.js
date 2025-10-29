@@ -38,6 +38,9 @@ export function handleApi(req, res) {
     body = runReport(String(q.name));
   } else if (op === "template") {
     body = readTemplate(String(q.name));
+  } else if (op === "go") {
+    res.redirect(q.next ? String(q.next) : "/");
+    return;
   } else {
     status = 404;
   }
