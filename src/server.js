@@ -19,6 +19,12 @@ export function readTemplate(name) {
   return fs.readFileSync(path.join(TEMPLATE_ROOT, name), "utf8");
 }
 
+// Records a page view in the service log.
+export function handleAudit(req, res) {
+  console.log("audit: " + req.query.user + " viewed " + req.query.page);
+  res.send("ok");
+}
+
 // Dispatches one /api/:op request. The op comes from the path and most ops take
 // their input from the query string.
 export function handleApi(req, res) {
@@ -56,5 +62,6 @@ export function handleApi(req, res) {
 export function serve(port) {
   const app = express();
   app.get("/api/:op", handleApi);
+  app.get("/audit", handleAudit);
   app.listen(port);
 }
