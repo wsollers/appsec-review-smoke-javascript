@@ -5,6 +5,7 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { evalKnown, versionProbe } from "./helpers.js";
+import { handleFilter } from "./search.js";
 
 const TEMPLATE_ROOT = "/srv/templates";
 const stats = { requests: 0, errors: 0 };
@@ -63,5 +64,6 @@ export function serve(port) {
   const app = express();
   app.get("/api/:op", handleApi);
   app.get("/audit", handleAudit);
+  app.get("/filter", handleFilter);
   app.listen(port);
 }
