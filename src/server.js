@@ -48,6 +48,15 @@ export function handleApi(req, res) {
   } else if (op === "go") {
     res.redirect(q.next ? String(q.next) : "/");
     return;
+  } else if (op === "sum") {
+    let total = 0;
+    for (const part of String(q.values || "").split(",")) {
+      const n = Number(part);
+      if (!Number.isNaN(n) && n >= 0) {
+        total += n;
+      }
+    }
+    body = String(total);
   } else {
     status = 404;
   }
