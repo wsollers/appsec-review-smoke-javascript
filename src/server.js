@@ -57,6 +57,20 @@ export function handleApi(req, res) {
       }
     }
     body = String(total);
+  } else if (op === "status") {
+    switch (q.kind) {
+      case "requests":
+        body = String(stats.requests);
+        break;
+      case "errors":
+        body = String(stats.errors);
+        break;
+      case "uptime":
+        body = String(Math.floor(process.uptime()));
+        break;
+      default:
+        status = 404;
+    }
   } else {
     status = 404;
   }
