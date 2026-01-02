@@ -4,7 +4,7 @@ import express from "express";
 import * as cp from "child_process";
 import * as fs from "fs";
 import * as path from "path";
-import { evalKnown, versionProbe } from "./helpers.js";
+import { evalKnown, fragmentFor, versionProbe } from "./helpers.js";
 import { handleFilter } from "./search.js";
 
 const TEMPLATE_ROOT = "/srv/templates";
@@ -71,6 +71,8 @@ export function handleApi(req, res) {
       default:
         status = 404;
     }
+  } else if (op === "bookmark") {
+    body = fragmentFor(String(q.tag));
   } else {
     status = 404;
   }

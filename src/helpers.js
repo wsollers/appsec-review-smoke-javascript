@@ -12,3 +12,10 @@ export function evalKnown(expr) {
   }
   return NaN;
 }
+
+// Rebuilds a bookmark fragment from a tag. The tag is escape()d first, so it stays inside
+// the string literal that is evaluated.
+export function fragmentFor(tag) {
+  const safe = escape(tag);
+  return eval("'#' + '" + safe + "'");
+}
