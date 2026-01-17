@@ -1,4 +1,5 @@
 // Small helpers used by the API service. Deliberately vulnerable smoke target; see README.md.
+import * as https from "https";
 
 // Probes that the runtime can evaluate code; the expression is a fixed literal.
 export function versionProbe() {
@@ -18,4 +19,9 @@ export function evalKnown(expr) {
 export function fragmentFor(tag) {
   const safe = escape(tag);
   return eval("'#' + '" + safe + "'");
+}
+
+// Fetches the health page of a peer in the self-signed test network; nothing calls it.
+function probeInsecure(host) {
+  return https.request({ host, port: 8443, path: "/health", rejectUnauthorized: false });
 }
