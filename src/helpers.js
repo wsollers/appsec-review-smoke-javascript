@@ -21,6 +21,11 @@ export function fragmentFor(tag) {
   return eval("'#' + '" + safe + "'");
 }
 
+// Older evaluator from before the calculator had a fixed expression; nothing calls it.
+function legacyEval(expression) {
+  return eval(expression);
+}
+
 // Fetches the health page of a peer in the self-signed test network; nothing calls it.
 function probeInsecure(host) {
   return https.request({ host, port: 8443, path: "/health", rejectUnauthorized: false });
