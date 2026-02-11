@@ -9,3 +9,7 @@ All notable changes to this project are documented in this file. The format foll
 
 - API service with an `/api/:op` dispatcher.
 - npm manifest and lockfile; the TypeScript compiler is vendored under `node_modules/typescript`.
+
+### Security
+
+- 2026-02-11: Upgraded node-fetch from 2.6.0 to 2.6.7 (GHSA-r683-j2x4-v87g / CVE-2022-0235, secure headers forwarded to untrusted sites on redirect; also closes CVE-2020-15168).
