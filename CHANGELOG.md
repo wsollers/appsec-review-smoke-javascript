@@ -13,3 +13,4 @@ All notable changes to this project are documented in this file. The format foll
 ### Security
 
 - 2026-02-11: Upgraded node-fetch from 2.6.0 to 2.6.7 (GHSA-r683-j2x4-v87g / CVE-2022-0235, secure headers forwarded to untrusted sites on redirect; also closes CVE-2020-15168).
+- 2026-02-26: Fixed command injection in `runReport` (CWE-78); reports are now produced in-process from a fixed list.

@@ -1,7 +1,6 @@
 // API service of the smoke target. This repository is a deliberately vulnerable smoke
 // target for appsec-review; see README.md.
 import express from "express";
-import * as cp from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { evalKnown, fragmentFor, versionProbe } from "./helpers.js";
@@ -10,9 +9,15 @@ import { handleFilter } from "./search.js";
 const TEMPLATE_ROOT = "/srv/templates";
 const stats = { requests: 0, errors: 0 };
 
-// Runs the report helper named by the request and returns its output.
+// Produces one of the two supported reports in-process; any other name is refused.
 export function runReport(name) {
-  return cp.execSync("/usr/libexec/smoke/report " + name).toString();
+  if (name === "requests") {
+    return String(stats.requests);
+  }
+  if (name === "errors") {
+    return String(stats.errors);
+  }
+  return null;
 }
 
 // Reads a template named by the request from the template root.
@@ -42,7 +47,9 @@ export function handleApi(req, res) {
   } else if (op === "calc") {
     body = String(evalKnown(String(q.expr)));
   } else if (op === "report") {
-    body = runReport(String(q.name));
+    const out = runReport(String(q.name));
+    status = out === null ? 404 : 200;
+    body = out || "";
   } else if (op === "template") {
     body = readTemplate(String(q.name));
   } else if (op === "go") {
