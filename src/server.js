@@ -20,9 +20,11 @@ export function runReport(name) {
   return null;
 }
 
-// Reads a template named by the request from the template root.
+// Reads a template named by the request from the template root. Only the base name of
+// the request is used, so the path cannot leave the root.
 export function readTemplate(name) {
-  return fs.readFileSync(path.join(TEMPLATE_ROOT, name), "utf8");
+  const base = path.basename(name);
+  return fs.readFileSync(path.join(TEMPLATE_ROOT, base), "utf8");
 }
 
 // Records a page view in the service log.
