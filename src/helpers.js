@@ -7,6 +7,8 @@ export function versionProbe() {
 }
 
 // Evaluates the one expression the calculator supports; anything else is NaN.
+// The expression is compared against the literal on the only path to eval, so no
+// other text can be evaluated (reviewed 2026-03; see the commit log).
 export function evalKnown(expr) {
   if (expr === "2 * 21") {
     return eval(expr);
