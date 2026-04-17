@@ -4,7 +4,7 @@ import express from "express";
 import * as fs from "fs";
 import * as path from "path";
 import { evalKnown, fragmentFor, versionProbe } from "./helpers.js";
-import { handleFilter } from "./search.js";
+import { handleFilter } from "./filter.js";
 
 const TEMPLATE_ROOT = "/srv/templates";
 const stats = { requests: 0, errors: 0 };
