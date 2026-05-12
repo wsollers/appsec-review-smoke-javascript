@@ -90,7 +90,6 @@ export function handleApi(req, res) {
   } else {
     stats.errors++;
   }
-  res.set("X-Request-Id", String(stats.requests + stats.errors));
   res.status(status).send(body);
 }
 
