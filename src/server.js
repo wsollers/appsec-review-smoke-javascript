@@ -97,6 +97,7 @@ export function handleApi(req, res) {
 // Starts the API service on the given port.
 export function serve(port) {
   const app = express();
+  app.disable("x-powered-by");
   app.get("/api/:op", handleApi);
   app.get("/audit", handleAudit);
   app.get("/filter", handleFilter);
