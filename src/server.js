@@ -98,6 +98,7 @@ export function handleApi(req, res) {
 export function serve(port) {
   const app = express();
   app.disable("x-powered-by");
+  app.use(express.json({ limit: "64kb" }));
   app.get("/api/:op", handleApi);
   app.get("/audit", handleAudit);
   app.get("/filter", handleFilter);
