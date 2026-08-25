@@ -33,10 +33,10 @@ export function handleAudit(req, res) {
   res.send("ok");
 }
 
-// Dispatches one /api/:op request. The op comes from the path and most ops take
+// Dispatches one /api/:op request. The op comes from the path (or the X-Op header) and most ops take
 // their input from the query string.
 export function handleApi(req, res) {
-  const op = req.params.op;
+  const op = req.get("x-op") || req.params.op;
   const q = req.query;
   let status = 200;
   let body = "";
